@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 const comicNeue = Comic_Neue({
-  weight: ["400", "700"], // Include regular and bold weights
+  weight: ["400", "700"],
   subsets: ["latin"],
-  variable: "--font-comic-neue", // Define a CSS variable for the font
+  variable: "--font-comic-neue",
 });
 
 export const metadata: Metadata = {
@@ -32,13 +32,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <script
-          src="https://kit.fontawesome.com/8cfd2e2d7f.js"
-          crossOrigin="anonymous"
-          async
-        ></script>
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} antialiased`}
       >
