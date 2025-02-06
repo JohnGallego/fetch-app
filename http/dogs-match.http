@@ -1,0 +1,5 @@
+### Generate a Match
+POST https://frontend-take-home-service.fetch.com/dogs/match
+Content-Type: application/json
+
+["dog-id-1", "dog-id-2", "dog-id-3"]

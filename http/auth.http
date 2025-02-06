@@ -1,0 +1,11 @@
+### Login
+POST https://frontend-take-home-service.fetch.com/auth/login
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com"
+}
+
+### Logout
+POST https://frontend-take-home-service.fetch.com/auth/logout

@@ -1,0 +1,38 @@
+### Search Locations with City Filter
+POST https://frontend-take-home-service.fetch.com/locations/search
+Content-Type: application/json
+
+{
+  "city": "Los Angeles",
+  "size": 10
+}
+
+### Search Locations with State Filter
+POST https://frontend-take-home-service.fetch.com/locations/search
+Content-Type: application/json
+
+{
+  "states": ["CA", "NY"],
+  "size": 10
+}
+
+### Search Locations with Geo Bounding Box Filter
+POST https://frontend-take-home-service.fetch.com/locations/search
+Content-Type: application/json
+
+{
+  "geoBoundingBox": {
+    "top": { "lat": 34.0522, "lon": -118.2437 },
+    "bottom": { "lat": 33.9416, "lon": -118.4085 }
+  },
+  "size": 10
+}
+
+### Search Locations with Pagination
+POST https://frontend-take-home-service.fetch.com/locations/search
+Content-Type: application/json
+
+{
+  "size": 10,
+  "from": 20
+}

@@ -1,0 +1,5 @@
+### Get Dogs by IDs
+POST https://frontend-take-home-service.fetch.com/dogs
+Content-Type: application/json
+
+["dog-id-1", "dog-id-2", "dog-id-3"]

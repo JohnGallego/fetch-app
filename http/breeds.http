@@ -1,0 +1,2 @@
+### Get All Breeds
+GET https://frontend-take-home-service.fetch.com/dogs/breeds

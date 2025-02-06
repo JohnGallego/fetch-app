@@ -1,0 +1,5 @@
+### Get Locations by ZIP Codes
+POST https://frontend-take-home-service.fetch.com/locations
+Content-Type: application/json
+
+["90210", "10001", "94107"]

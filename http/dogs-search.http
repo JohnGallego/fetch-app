@@ -1,0 +1,17 @@
+### Search Dogs with Default Parameters
+GET https://frontend-take-home-service.fetch.com/dogs/search
+
+### Search Dogs with Breed Filter
+GET https://frontend-take-home-service.fetch.com/dogs/search?breeds=Labrador Retriever&size=10
+
+### Search Dogs with Age Filter
+GET https://frontend-take-home-service.fetch.com/dogs/search?ageMin=1&ageMax=5&size=10
+
+### Search Dogs with Zip Code Filter
+GET https://frontend-take-home-service.fetch.com/dogs/search?zipCodes=90210&size=10
+
+### Search Dogs with Pagination
+GET https://frontend-take-home-service.fetch.com/dogs/search?size=10&from=20
+
+### Search Dogs with Sorting
+GET https://frontend-take-home-service.fetch.com/dogs/search?sort=breed:asc&size=10
