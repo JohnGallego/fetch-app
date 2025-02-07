@@ -3,6 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { Comic_Neue, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "animate.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} container h-screen mx-auto flex flex-col antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} container h-screen min-h-[600px] min-w-[325px] mx-auto flex flex-col antialiased`}
       >
         <AppNavBar />
 
