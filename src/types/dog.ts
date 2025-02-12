@@ -19,7 +19,8 @@ export interface DogSearchParams {
   ageMin?: number;
   ageMax?: number;
   page?: number;
-  pageSize?: number;
+  from?: number;
+  size?: number;
   sort?: "breed" | "name" | "age";
   sortDirection?: "asc" | "desc";
 }

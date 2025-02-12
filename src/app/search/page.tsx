@@ -23,7 +23,7 @@ export default async function SearchPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="flex flex-col gap-4 container mx-auto p-4">
+      <div className="flex flex-col gap-2 container mx-auto p-4">
         <SearchFormArea filters={filters} />{" "}
         <SearchResultsContainer dogDetailsComponent={DogDetails} />
       </div>

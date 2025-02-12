@@ -5,7 +5,8 @@ export const DEFAULTS: Required<DogSearchParams> = {
   ageMin: 1,
   ageMax: 10,
   page: 0,
-  pageSize: 20,
+  from: 0,
+  size: 20,
   sort: "breed",
   sortDirection: "asc",
 };

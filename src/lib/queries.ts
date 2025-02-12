@@ -15,17 +15,22 @@ export const queryDogs = (filters: DogSearchParams) =>
     queryFn: async () => {
       const params = filtersToQueryParams(filters);
 
-      const searchResult = await fetchAPI<DogSearchResult>(
+      const searchResults = await fetchAPI<DogSearchResult>(
         `${API_ENDPOINTS.DOGS_SEARCH}?${params.toString()}`
       );
 
-      return fetchAPI<Dog[]>(API_ENDPOINTS.DOGS, {
+      const dogDetails = await fetchAPI<Dog[]>(API_ENDPOINTS.DOGS, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(searchResult.resultIds),
+        body: JSON.stringify(searchResults.resultIds),
       });
+
+      return {
+        data: dogDetails,
+        totalCount: searchResults.total,
+      };
     },
     placeholderData: keepPreviousData,
   });
