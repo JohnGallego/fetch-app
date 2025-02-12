@@ -2,8 +2,8 @@ import { DogSearchParams } from "@/types/dog";
 
 export const DEFAULTS: Required<DogSearchParams> = {
   breeds: [],
-  ageMin: 1,
-  ageMax: 10,
+  ageMin: 0,
+  ageMax: 13,
   page: 0,
   from: 0,
   size: 20,

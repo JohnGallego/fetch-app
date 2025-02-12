@@ -44,23 +44,27 @@ export default function SortForm({
       <form
         id={id}
         onSubmit={form.handleSubmit(onFormSubmit)}
-        className="flex flex-col gap-6"
+        className="flex flex-col gap-4"
       >
-        <div className="flex gap-6">
+        <div className="flex gap-4">
           <FormField
             control={form.control}
             name="sortBy"
             render={({ field: { value, onChange } }) => (
               <FormItem>
-                <FormLabel>Sort By</FormLabel>
+                <FormLabel className="text-sm">Sort By</FormLabel>{" "}
                 <FormControl>
                   <Select onValueChange={onChange} defaultValue={value}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="w-[160px] text-sm">
                       <SelectValue placeholder={value} />
                     </SelectTrigger>
                     <SelectContent>
                       {SORT_FIELDS.map((sortField) => (
-                        <SelectItem key={sortField} value={sortField}>
+                        <SelectItem
+                          key={sortField}
+                          value={sortField}
+                          className="text-sm"
+                        >
                           {sortField}
                         </SelectItem>
                       ))}
@@ -76,15 +80,19 @@ export default function SortForm({
             name="sortDirection"
             render={({ field: { value, onChange } }) => (
               <FormItem>
-                <FormLabel>Sort Order</FormLabel>
+                <FormLabel className="text-sm">Sort Order</FormLabel>{" "}
                 <FormControl>
                   <Select onValueChange={onChange} defaultValue={value}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="w-[160px] text-sm">
                       <SelectValue placeholder={value} />
                     </SelectTrigger>
                     <SelectContent>
                       {SORT_ORDER.map((order) => (
-                        <SelectItem key={order} value={order}>
+                        <SelectItem
+                          key={order}
+                          value={order}
+                          className="text-sm"
+                        >
                           {order}
                         </SelectItem>
                       ))}

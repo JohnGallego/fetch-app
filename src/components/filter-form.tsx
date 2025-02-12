@@ -53,14 +53,14 @@ export default function FilterForm({
       <form
         id={id}
         onSubmit={form.handleSubmit(onFormSubmit)}
-        className={cn("flex flex-col gap-8", className)}
+        className={cn("flex flex-col gap-4", className)}
       >
         <FormField
           control={form.control}
           name="breeds"
           render={({ field: { value, onChange } }) => (
-            <FormItem>
-              <FormLabel>Breeds</FormLabel>
+            <FormItem className="w-full md:max-w-[250px]">
+              <FormLabel className="text-sm">Breeds</FormLabel>{" "}
               <FormControl>
                 <BreedsCombo
                   availableBreeds={breedsList}
@@ -68,7 +68,7 @@ export default function FilterForm({
                   onBreedsChange={onChange}
                 />
               </FormControl>
-              <FormDescription>
+              <FormDescription className="text-xs mt-1">
                 {value && value.length > 0 ? (
                   <>
                     Selected: {value.slice(0, 10).join(", ")}
@@ -93,25 +93,30 @@ export default function FilterForm({
           control={form.control}
           name="ageRange"
           render={({ field: { value, onChange } }) => (
-            <FormItem className="min-w-[300px]">
-              <FormLabel>Age Range</FormLabel>
+            <FormItem className="w-full md:min-w-[250px] md:max-w-[250px]">
+              <FormLabel className="text-sm">Age Range</FormLabel>{" "}
               <FormControl className="slider-offset">
                 <Slider
                   min={0}
-                  max={10}
+                  max={13}
                   step={1}
                   defaultValue={value}
                   onValueChange={onChange}
                   minStepsBetweenThumbs={1}
                 />
               </FormControl>
-              <FormDescription>
-                {(value?.[0] ?? 0) < 1 ? "Under 1" : value?.[0]} -{" "}
-                {(value?.[1] ?? 0) < 1
+              <FormDescription className="text-xs mt-1">
+                {value?.[0] === 0
+                  ? "No minimum"
+                  : (value?.[0] ?? 0) < 1
                   ? "Under 1"
-                  : value?.[1] === 10
-                  ? "10+"
-                  : value?.[1]}
+                  : `Min Age: ${value?.[0]}`}
+                {" - "}
+                {value?.[1] === 13
+                  ? "No maximum"
+                  : (value?.[1] ?? 0) < 1
+                  ? "Under 1"
+                  : `Max Age: ${value?.[1]}`}
               </FormDescription>
             </FormItem>
           )}

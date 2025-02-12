@@ -1,5 +1,6 @@
 import FavoriteHeaderIcon from "./favorite-header-icon";
 import FontAwesomePawIcon from "./font-awesome-paw-icon";
+import UserPopover from "./user-popover";
 
 export default function AppNavBar() {
   return (
@@ -15,8 +16,9 @@ export default function AppNavBar() {
         </h2>
       </div>
 
-      <div className="ml-auto">
+      <div className="ml-auto flex items-center gap-4">
         <FavoriteHeaderIcon />
+        <UserPopover />
       </div>
     </div>
   );

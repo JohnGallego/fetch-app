@@ -49,7 +49,7 @@ const FavoriteHeaderIcon = () => {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
+        <DialogHeader className="sr-only">
           <DialogTitle>Favorite Friends</DialogTitle>
           <DialogDescription>
             Here are all of your paw-some pals!

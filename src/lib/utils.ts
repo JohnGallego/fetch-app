@@ -15,25 +15,34 @@ export function filtersToQueryParams(
   if (filters.breeds && filters.breeds.length > 0) {
     params.set("breeds", filters.breeds.join(","));
   }
-  if (filters.ageMin !== undefined && filters.ageMin !== DEFAULTS.ageMin) {
+
+  // Age Range - Remove params if they are at their "no restriction" values
+  if (filters.ageMin !== 0) {
+    // Remove ageMin param if it's 0
     params.set("ageMin", String(filters.ageMin));
   }
-  if (filters.ageMax !== undefined && filters.ageMax !== DEFAULTS.ageMax) {
+
+  if (filters.ageMax !== 13) {
+    // Remove ageMax param if it's 13
     params.set("ageMax", String(filters.ageMax));
   }
+
   if (filters.sort !== undefined && filters.sort !== DEFAULTS.sort) {
     params.set("sort", filters.sort);
   }
+
   if (
     filters.sortDirection !== undefined &&
     filters.sortDirection !== DEFAULTS.sortDirection
   ) {
     params.set("sortDirection", filters.sortDirection);
   }
+
   if (filters.page !== undefined && filters.page > 1) {
     // Only set page if it's > 1 for cleaner URLs, page 1 is default
     params.set("page", String(filters.page));
   }
+
   if (filters.size !== undefined) {
     params.set("size", String(filters.size));
   }
@@ -61,24 +70,28 @@ export function queryParamsToFilters(params: {
       );
     }
   }
-  if (params.ageMin && typeof params.ageMin === "string") {
-    filters.ageMin = Number(params.ageMin);
-  }
-  if (params.ageMax && typeof params.ageMax === "string") {
-    filters.ageMax = Number(params.ageMax);
-  }
+
+  // Age Range - Handle missing params as 0 and 13 respectively
+  const ageMinParam = params.ageMin;
+  const ageMaxParam = params.ageMax;
+  filters.ageMin = ageMinParam === undefined ? 0 : Number(ageMinParam); // Missing ageMin = 0
+  filters.ageMax = ageMaxParam === undefined ? 13 : Number(ageMaxParam); // Missing ageMax = 13
+
   if (params.sort && typeof params.sort === "string") {
     filters.sort = params.sort as "breed" | "name" | "age";
   }
+
   if (params.sortDirection && typeof params.sortDirection === "string") {
     filters.sortDirection = params.sortDirection as "asc" | "desc";
   }
+
   if (params.page && typeof params.page === "string") {
     const page = Number(params.page);
     filters.page = page > 0 ? page : 1; // Ensure page is at least 1
   } else {
     filters.page = 1; // Default to page 1
   }
+
   if (params.size && typeof params.size === "string") {
     filters.size = Number(params.size);
   } else {

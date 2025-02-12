@@ -67,9 +67,9 @@ export default function SearchFormArea({
 
   return (
     <>
-      <div className="flex flex-col md:flex-row gap-4">
+      <div className="flex flex-col md:flex-row gap-4 md:items-center md: justify-center">
         {/* Mobile filter buttons */}
-        <div className="flex justify-end gap-4 md:hidden">
+        <div className="flex justify-end gap-4 md:hidden pb-4">
           <FilterDialog
             filters={initialFilters}
             onSubmit={handleFilterFormSubmit}
@@ -79,35 +79,42 @@ export default function SearchFormArea({
             onSubmit={handleSortFormSubmit}
           />
         </div>
-
         {/* Tablet/Desktop filters */}
-        <div className="hidden gap-4 md:flex md:flex-col md:items-start">
-          <div className="flex gap-4 items-center">
+        <div className="hidden md:flex md:flex-row gap-8 items-start">
+          <div className="flex flex-col gap-2">
             <FilterForm
-              className="flex-row"
+              className="flex-col md:flex-row items-center gap-4"
               id="filter-form"
               filters={initialFilters}
               onSubmit={handleFilterFormSubmit}
             />
-            <div className="mt-4">
-              <Button type="submit" variant="outline" form="filter-form">
-                Update Filters
-              </Button>
-            </div>
+            <Button
+              type="submit"
+              variant="outline"
+              size="sm"
+              form="filter-form"
+              className="mt-2"
+            >
+              Update Filters
+            </Button>
           </div>
 
           {/* Tablet/Desktop sort */}
-          <div className="flex gap-4 items-center">
+          <div className="flex flex-col gap-2">
             <SortForm
               id="sort-form"
               filters={initialFilters}
               onSubmit={handleSortFormSubmit}
             />
-            <div className="mt-8">
-              <Button type="submit" variant="outline" form="sort-form">
-                Update Sort
-              </Button>
-            </div>
+            <Button
+              type="submit"
+              variant="outline"
+              size="sm"
+              form="sort-form"
+              className="mt-2"
+            >
+              Update Sort
+            </Button>
           </div>
         </div>
       </div>

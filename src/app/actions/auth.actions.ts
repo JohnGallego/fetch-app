@@ -1,7 +1,6 @@
 "use server";
 
 import { API_ENDPOINTS } from "@/constants/api-endpoints";
-import { fetchAPI } from "@/lib/api";
 import { LoginFormData } from "@/schemas/login.schema";
 import * as cookie from "cookie";
 import { cookies } from "next/headers";
@@ -51,8 +50,11 @@ export async function loginUser(credentials: LoginFormData) {
 
 export async function logoutUser() {
   try {
-    await fetchAPI(API_ENDPOINTS.LOGOUT, {
+    await fetch(API_ENDPOINTS.LOGOUT, {
       method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
 
     // Remove the cookie

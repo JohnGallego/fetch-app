@@ -55,3 +55,41 @@ export const queryFavoriteDogs = (dogIds: string[]) =>
     },
     enabled: dogIds && dogIds.length > 0, // Enable only if there are dogIds
   });
+
+export const queryMatchDog = (favoriteDogIds: string[]) =>
+  queryOptions({
+    queryKey: ["matchDog", favoriteDogIds],
+    queryFn: async () => {
+      if (!favoriteDogIds || favoriteDogIds.length === 0) {
+        return { data: [] };
+      }
+
+      console.log("favorite ids array", favoriteDogIds);
+
+      const matchedDogId = await fetchAPI<{ match: string }>(
+        API_ENDPOINTS.DOGS_MATCH,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(favoriteDogIds),
+        }
+      );
+
+      console.log("matched dog id", matchedDogId);
+
+      const dogDetails = await fetchAPI<Dog[]>(API_ENDPOINTS.DOGS, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify([matchedDogId.match]),
+      });
+
+      console.log("matched dog details", dogDetails);
+
+      return { data: dogDetails };
+    },
+    enabled: favoriteDogIds && favoriteDogIds.length > 0, // Enable only if there are dogIds
+  });
