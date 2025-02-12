@@ -1,9 +1,10 @@
 import AppNavBar from "@/components/app-nav-bar";
+import Providers from "@/components/providers";
 import { Toaster } from "@/components/ui/toaster";
+import "animate.css";
 import type { Metadata } from "next";
 import { Comic_Neue, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import "animate.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,11 +37,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} container h-screen min-h-[600px] min-w-[325px] mx-auto flex flex-col antialiased`}
       >
-        <AppNavBar />
+        <Providers>
+          <AppNavBar />
 
-        {children}
+          {children}
 
-        <Toaster />
+          <Toaster />
+        </Providers>
       </body>
     </html>
   );

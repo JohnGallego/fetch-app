@@ -16,12 +16,12 @@ export interface DogSearchResult {
 
 export interface DogSearchParams {
   breeds?: string[];
-  zipCodes?: string[];
   ageMin?: number;
   ageMax?: number;
-  size?: number;
-  from?: number;
-  sort?: string; // e.g., "breed:asc"
+  page?: number;
+  pageSize?: number;
+  sort?: "breed" | "name" | "age";
+  sortDirection?: "asc" | "desc";
 }
 
 export interface Match {

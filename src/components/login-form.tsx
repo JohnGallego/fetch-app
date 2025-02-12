@@ -1,6 +1,6 @@
 "use client";
 
-import { login } from "@/app/actions/auth.actions";
+import { loginUser } from "@/app/actions/auth.actions";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -24,7 +24,7 @@ import { cn } from "@/lib/utils";
 import { LoginFormData, loginSchema } from "@/schemas/login.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 
@@ -34,6 +34,7 @@ export type LoginFormProps = {
 
 export default function LoginForm({ className }: LoginFormProps) {
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
   const { toast } = useToast();
 
   const form = useForm<LoginFormData>({
@@ -46,20 +47,19 @@ export default function LoginForm({ className }: LoginFormProps) {
 
   const onSubmit = async (data: LoginFormData) => {
     startTransition(async () => {
-      const result = await login(data.name, data.email);
+      try {
+        await loginUser(data);
 
-      if (result.success) {
         toast({
           title: "Login Successful",
           description: "You have successfully logged in.",
         });
 
-        redirect("/search");
-      } else {
+        router.push("/search");
+      } catch (error) {
         toast({
           title: "Login Failed",
-          description:
-            result.error || "Please check your credentials and try again.",
+          description: `Please check your credentials and try again. Details: ${error}`,
           variant: "destructive",
         });
       }

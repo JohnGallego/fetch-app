@@ -1,8 +1,10 @@
 ### Search Dogs with Default Parameters
 GET https://frontend-take-home-service.fetch.com/dogs/search
+Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNzM5MjIxOTg0LCJleHAiOjE3MzkyMjU1ODR9.W85FnAqyTEffGIStbvZE-_R5wa_uBZHJC134uegEnyk
 
 ### Search Dogs with Breed Filter
-GET https://frontend-take-home-service.fetch.com/dogs/search?breeds=Labrador Retriever&size=10
+GET https://frontend-take-home-service.fetch.com/dogs/search?breeds[0]=Collie&breeds[1]=Cocker Spaniel&breed[2]=Clumber
+Authorization: token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNzM5MzA1NTE2LCJleHAiOjE3MzkzMDkxMTZ9.K2vgw97A1DFV2X1u2faSOCGeyEzDtpj3CXo1ctIfQKg;
 
 ### Search Dogs with Age Filter
 GET https://frontend-take-home-service.fetch.com/dogs/search?ageMin=1&ageMax=5&size=10

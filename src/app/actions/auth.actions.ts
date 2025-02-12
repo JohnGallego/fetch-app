@@ -1,8 +1,8 @@
 "use server";
 
 import { API_ENDPOINTS } from "@/constants/api-endpoints";
+import { fetchAPI } from "@/lib/api";
 import { LoginFormData } from "@/schemas/login.schema";
-import { fetchAPI } from "@/utils/api";
 import * as cookie from "cookie";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -18,8 +18,8 @@ export async function loginUser(credentials: LoginFormData) {
     });
 
     if (!response.ok) {
-      const errorText = await response.text(); // Get the error message from the server
-      throw new Error(`Login failed: ${response.status} - ${errorText}`); // Include more details in the error
+      const errorText = await response.text();
+      throw new Error(`Login failed: ${response.status} - ${errorText}`);
     }
 
     const setCookieHeader = response.headers.get("set-cookie");

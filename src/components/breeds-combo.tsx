@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Popover,
   PopoverContent,
@@ -14,15 +13,27 @@ import { ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
 export type BreedsComboProps = {
-  breeds: string[];
+  availableBreeds: string[];
+  selectedBreeds: string[];
+  onBreedsChange: (breeds: string[]) => void;
 };
 
-export default function BreedsCombo({ breeds }: BreedsComboProps) {
+export default function BreedsCombo({
+  availableBreeds,
+  selectedBreeds: initialSelectedBreeds,
+  onBreedsChange,
+}: BreedsComboProps) {
   const [open, setOpen] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState<string>("");
-  const [selectedBreeds, setSelectedBreeds] = React.useState<string[]>(breeds);
+  const [currentSelectedBreeds, setCurrentSelectedBreeds] = React.useState<
+    string[]
+  >(initialSelectedBreeds);
+  // Update currentSelectedBreeds when the selectedBreeds prop changes
+  React.useEffect(() => {
+    setCurrentSelectedBreeds(initialSelectedBreeds);
+  }, [initialSelectedBreeds]);
 
-  const filteredBreeds = breeds.filter((breed) =>
+  const filteredBreeds = availableBreeds.filter((breed) =>
     breed.toLowerCase().includes(searchValue.toLowerCase())
   );
 
@@ -32,30 +43,30 @@ export default function BreedsCombo({ breeds }: BreedsComboProps) {
   };
 
   const handleSelectAll = () => {
-    setSelectedBreeds(breeds);
+    setCurrentSelectedBreeds(availableBreeds);
+    onBreedsChange(availableBreeds);
   };
 
   const handleRemoveAll = () => {
-    setSelectedBreeds([]);
+    setCurrentSelectedBreeds([]);
+    onBreedsChange([]);
   };
 
   const handleToggle = (breed: string) => {
-    console.log(breed);
-    if (selectedBreeds.includes(breed)) {
-      setSelectedBreeds((prev) => prev.filter((b) => b !== breed));
-    } else {
-      setSelectedBreeds((prev) => [...prev, breed]);
-    }
+    const updatedBreeds = currentSelectedBreeds.includes(breed)
+      ? currentSelectedBreeds.filter((b) => b !== breed)
+      : [...currentSelectedBreeds, breed];
+
+    setCurrentSelectedBreeds(updatedBreeds);
+    onBreedsChange(updatedBreeds);
   };
 
   return (
     <div className="grid grid-cols-4 items-center gap-4">
-      <Label htmlFor="breed">Breeds</Label>
-
       <Popover open={open} onOpenChange={setOpen} modal={true}>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="col-span-2 flex justify-between">
-            Select breeds...{" "}
+          <Button variant="outline" className="col-span-4 flex justify-between">
+            Select breeds...
             <ChevronsUpDown className="h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
@@ -87,7 +98,7 @@ export default function BreedsCombo({ breeds }: BreedsComboProps) {
                   <Checkbox
                     id={`breed-${index}`}
                     onClick={() => handleToggle(breed)}
-                    checked={selectedBreeds.includes(breed)}
+                    checked={currentSelectedBreeds.includes(breed)}
                   />
                   <label htmlFor={`breed-${index}`} className="cursor-pointer">
                     {breed}
