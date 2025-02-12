@@ -35,7 +35,7 @@ function SearchResultsContainer({
 
   return (
     <ScrollArea>
-      <div className="flex flex-col gap-4 p-4 max-h-[calc(100vh-200px)]">
+      <div className="flex flex-col gap-4 p-4 max-h-[calc(100vh-200px)] lg:grid lg:grid-cols-2 xl:grid-cols-3">
         {data?.map((dog) => (
           <DogDetailsComponent key={dog.id} dog={dog} />
         ))}

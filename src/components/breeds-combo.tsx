@@ -28,10 +28,6 @@ export default function BreedsCombo({
   const [currentSelectedBreeds, setCurrentSelectedBreeds] = React.useState<
     string[]
   >(initialSelectedBreeds);
-  // Update currentSelectedBreeds when the selectedBreeds prop changes
-  React.useEffect(() => {
-    setCurrentSelectedBreeds(initialSelectedBreeds);
-  }, [initialSelectedBreeds]);
 
   const filteredBreeds = availableBreeds.filter((breed) =>
     breed.toLowerCase().includes(searchValue.toLowerCase())
@@ -58,6 +54,7 @@ export default function BreedsCombo({
       : [...currentSelectedBreeds, breed];
 
     setCurrentSelectedBreeds(updatedBreeds);
+
     onBreedsChange(updatedBreeds);
   };
 

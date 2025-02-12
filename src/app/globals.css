@@ -70,3 +70,7 @@
     @apply bg-background text-foreground;
   }
 }
+
+.slider-offset {
+  margin-top: 1.5rem !important;
+}
