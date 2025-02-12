@@ -1,3 +1,4 @@
+import FavoriteHeaderIcon from "./favorite-header-icon";
 import FontAwesomePawIcon from "./font-awesome-paw-icon";
 
 export default function AppNavBar() {
@@ -12,6 +13,10 @@ export default function AppNavBar() {
         <h2 className="font-geist text-sm text-gray-500 leading-none">
           Finding your furry soulmate.
         </h2>
+      </div>
+
+      <div className="ml-auto">
+        <FavoriteHeaderIcon />
       </div>
     </div>
   );

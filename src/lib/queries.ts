@@ -34,3 +34,24 @@ export const queryDogs = (filters: DogSearchParams) =>
     },
     placeholderData: keepPreviousData,
   });
+
+export const queryFavoriteDogs = (dogIds: string[]) =>
+  queryOptions({
+    queryKey: ["favoriteDogs", dogIds],
+    queryFn: async () => {
+      if (!dogIds || dogIds.length === 0) {
+        return { data: [], totalCount: 0 };
+      }
+
+      const dogDetails = await fetchAPI<Dog[]>(API_ENDPOINTS.DOGS, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dogIds),
+      });
+
+      return { data: dogDetails, totalCount: dogIds.length };
+    },
+    enabled: dogIds && dogIds.length > 0, // Enable only if there are dogIds
+  });

@@ -49,8 +49,6 @@ function SearchResultsContainer({
       />
 
       <div className="flex justify-center pb-2 text-sm text-gray-500">
-        {" "}
-        {/* Added div for total count */}
         {totalCount.toLocaleString()} records found
       </div>
 
