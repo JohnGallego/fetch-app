@@ -27,6 +27,7 @@ export default function FilterDialog({
   const [open, setOpen] = React.useState(false);
 
   const handleSubmit = (values: SearchFilterData) => {
+    console.log("handle internal submit in filter-dialog", values);
     handleDialogSubmit(values);
     setOpen(false);
   };
@@ -46,7 +47,7 @@ export default function FilterDialog({
         </DialogHeader>
 
         <FilterForm
-          id="filter-form"
+          id="filter-form-mobile"
           filters={filters}
           onSubmit={handleSubmit}
         />
@@ -58,7 +59,7 @@ export default function FilterDialog({
             </Button>
           </DialogClose>
 
-          <Button type="submit" variant="outline" form="filter-form">
+          <Button type="submit" variant="outline" form="filter-form-mobile">
             Update
           </Button>
         </div>

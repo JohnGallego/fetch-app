@@ -22,6 +22,7 @@ export default function SearchFormArea({
   const searchParams = useSearchParams();
 
   const handleFilterFormSubmit = (values: SearchFilterData) => {
+    console.log("handle submit in search-form-area", values);
     const currentFilters = queryParamsToFilters(
       Object.fromEntries(searchParams)
     );
@@ -37,7 +38,7 @@ export default function SearchFormArea({
 
     const paramsString = filtersToQueryParams(updatedFilters);
     const searchUrl = `/search?${paramsString}`;
-
+    console.log("handle submit in search-form-area params", paramsString);
     router.push(searchUrl);
   };
 

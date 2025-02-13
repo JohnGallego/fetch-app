@@ -40,7 +40,11 @@ export default function SortDialog({
           <DialogTitle>Sort Results</DialogTitle>
         </DialogHeader>
 
-        <SortForm id="sort-form" filters={filters} onSubmit={handleSubmit} />
+        <SortForm
+          id="sort-form-mobile"
+          filters={filters}
+          onSubmit={handleSubmit}
+        />
 
         <div className="flex gap-5 self-end mt-4">
           <DialogClose asChild>
@@ -49,7 +53,7 @@ export default function SortDialog({
             </Button>
           </DialogClose>
 
-          <Button type="submit" variant="outline" form="sort-form">
+          <Button type="submit" variant="outline" form="sort-form-mobile">
             Update Sort
           </Button>
         </div>
