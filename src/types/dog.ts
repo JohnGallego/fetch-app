@@ -7,7 +7,7 @@ export interface Dog {
   age: number;
   zip_code: string;
   breed: string;
-  location: Location;
+  location?: Location;
 }
 
 export interface DogSearchResult {

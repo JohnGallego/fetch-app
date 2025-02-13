@@ -9,6 +9,7 @@ export const DEFAULTS: Required<DogSearchParams> = {
   size: 20,
   sort: "breed",
   sortDirection: "asc",
+  zipCodes: "",
 };
 
 export const SORT_FIELDS: Array<"breed" | "name" | "age"> = [
