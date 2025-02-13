@@ -27,6 +27,10 @@ export function filtersToQueryParams(
     params.set("ageMax", String(filters.ageMax));
   }
 
+  if (filters.zipCodes) {
+    params.set("zipCodes", filters.zipCodes);
+  }
+
   if (filters.sort !== undefined && filters.sort !== DEFAULTS.sort) {
     params.set("sort", filters.sort);
   }
@@ -50,7 +54,7 @@ export function filtersToQueryParams(
   if (filters.page && filters.size) {
     params.set("from", String((filters.page - 1) * filters.size));
   } else {
-    params.set("from", String(0)); // Default from to 0 if page or pageSize is missing (shouldn't happen with defaults)
+    params.set("from", String(0));
   }
 
   return params;
@@ -76,6 +80,10 @@ export function queryParamsToFilters(params: {
   const ageMaxParam = params.ageMax;
   filters.ageMin = ageMinParam === undefined ? 0 : Number(ageMinParam); // Missing ageMin = 0
   filters.ageMax = ageMaxParam === undefined ? 13 : Number(ageMaxParam); // Missing ageMax = 13
+
+  const zipCodesParam = params.zipCodes;
+  filters.zipCodes =
+    zipCodesParam === undefined ? undefined : (zipCodesParam as string);
 
   if (params.sort && typeof params.sort === "string") {
     filters.sort = params.sort as "breed" | "name" | "age";

@@ -25,19 +25,13 @@ export default function SearchFormArea({
     const currentFilters = queryParamsToFilters(
       Object.fromEntries(searchParams)
     );
-    console.log(
-      "current filters",
-      currentFilters,
-      "inital filters",
-      initialFilters,
-      "newfilters",
-      values
-    );
+
     const updatedFilters: DogSearchParams = {
       ...currentFilters,
       breeds: values.breeds,
       ageMin: values.ageRange?.[0],
       ageMax: values.ageRange?.[1],
+      zipCodes: values.zipCodes,
       page: 0,
     };
 

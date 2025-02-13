@@ -27,7 +27,6 @@ export default function FilterDialog({
   const [open, setOpen] = React.useState(false);
 
   const handleSubmit = (values: SearchFilterData) => {
-    console.log("filtger dialog | handle submit | form values", values);
     handleDialogSubmit(values);
     setOpen(false);
   };

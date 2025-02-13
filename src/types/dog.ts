@@ -1,3 +1,5 @@
+import { Location } from "@/types/location";
+
 export interface Dog {
   id: string;
   img: string;
@@ -5,6 +7,7 @@ export interface Dog {
   age: number;
   zip_code: string;
   breed: string;
+  location: Location;
 }
 
 export interface DogSearchResult {
@@ -23,6 +26,7 @@ export interface DogSearchParams {
   size?: number;
   sort?: "breed" | "name" | "age";
   sortDirection?: "asc" | "desc";
+  zipCodes?: string;
 }
 
 export interface Match {

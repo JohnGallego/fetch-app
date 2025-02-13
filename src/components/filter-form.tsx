@@ -7,7 +7,9 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { DEFAULTS } from "@/constants/search";
 import { queryBreeds } from "@/lib/queries";
@@ -45,6 +47,7 @@ export default function FilterForm({
         filters?.ageMin ?? DEFAULTS.ageMin,
         filters?.ageMax ?? DEFAULTS.ageMax,
       ],
+      zipCodes: filters?.zipCodes ?? "",
     },
   });
 
@@ -118,6 +121,23 @@ export default function FilterForm({
                   ? "Under 1"
                   : `Max Age: ${value?.[1]}`}
               </FormDescription>
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="zipCodes"
+          render={({ field }) => (
+            <FormItem className="w-full md:max-w-[250px]">
+              <FormLabel className="text-sm">Zip Code</FormLabel>
+              <FormControl>
+                <Input placeholder="Enter a zip code" {...field} />
+              </FormControl>
+              <FormDescription className="text-xs mt-1">
+                Enter a single zip code to filter dogs by location.
+              </FormDescription>
+              <FormMessage />
             </FormItem>
           )}
         />

@@ -1,5 +1,6 @@
 import { API_ENDPOINTS } from "@/constants/api-endpoints";
 import { Dog, DogSearchParams, DogSearchResult } from "@/types/dog";
+import { Location } from "@/types/location";
 import { keepPreviousData, queryOptions } from "@tanstack/react-query";
 import { fetchAPI } from "./api";
 import { filtersToQueryParams } from "./utils";
@@ -27,8 +28,29 @@ export const queryDogs = (filters: DogSearchParams) =>
         body: JSON.stringify(searchResults.resultIds),
       });
 
+      const dogZips = dogDetails.map((dog) => dog.zip_code);
+
+      const dogLocations = await fetchAPI<Location[]>(API_ENDPOINTS.LOCATIONS, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dogZips),
+      });
+
+      const enrichedDogDetails = dogDetails.map((dog) => {
+        const location = dogLocations
+          .filter((location) => !!location)
+          .find((location) => location.zip_code === dog.zip_code);
+
+        return {
+          ...dog,
+          location,
+        };
+      });
+
       return {
-        data: dogDetails,
+        data: enrichedDogDetails,
         totalCount: searchResults.total,
       };
     },
@@ -51,7 +73,28 @@ export const queryFavoriteDogs = (dogIds: string[]) =>
         body: JSON.stringify(dogIds),
       });
 
-      return { data: dogDetails, totalCount: dogIds.length };
+      const dogZips = dogDetails.map((dog) => dog.zip_code);
+
+      const dogLocations = await fetchAPI<Location[]>(API_ENDPOINTS.LOCATIONS, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(dogZips),
+      });
+
+      const enrichedDogDetails = dogDetails.map((dog) => {
+        const location = dogLocations
+          .filter((location) => !!location)
+          .find((location) => location.zip_code === dog.zip_code);
+
+        return {
+          ...dog,
+          location,
+        };
+      });
+
+      return { data: enrichedDogDetails, totalCount: dogIds.length };
     },
     enabled: dogIds && dogIds.length > 0, // Enable only if there are dogIds
   });
@@ -64,8 +107,6 @@ export const queryMatchDog = (favoriteDogIds: string[]) =>
         return { data: [] };
       }
 
-      console.log("favorite ids array", favoriteDogIds);
-
       const matchedDogId = await fetchAPI<{ match: string }>(
         API_ENDPOINTS.DOGS_MATCH,
         {
@@ -77,8 +118,6 @@ export const queryMatchDog = (favoriteDogIds: string[]) =>
         }
       );
 
-      console.log("matched dog id", matchedDogId);
-
       const dogDetails = await fetchAPI<Dog[]>(API_ENDPOINTS.DOGS, {
         method: "POST",
         headers: {
@@ -86,8 +125,6 @@ export const queryMatchDog = (favoriteDogIds: string[]) =>
         },
         body: JSON.stringify([matchedDogId.match]),
       });
-
-      console.log("matched dog details", dogDetails);
 
       return { data: dogDetails };
     },

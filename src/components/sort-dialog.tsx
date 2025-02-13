@@ -26,7 +26,6 @@ export default function SortDialog({
   const [open, setOpen] = React.useState(false);
 
   const handleSubmit = (values: SearchSortData) => {
-    console.log("sort dialog | handle submit | form values", values);
     handleDialogSubmit(values);
     setOpen(false);
   };

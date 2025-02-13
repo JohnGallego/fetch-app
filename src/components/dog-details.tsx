@@ -81,7 +81,8 @@ const DogDetails: React.FC<DogDetailsProps> = ({ dog, onFavoriteChange }) => {
             <span>{dog.breed}</span>
             <Separator />
             <span className="text-xs text-muted-foreground">
-              Age: {dog.age} | Zip: {dog.zip_code}
+              Age: {dog.age} | {`${dog.location?.city}, ${dog.location?.state}`}{" "}
+              | Zip: {dog.zip_code}
             </span>
           </CardDescription>
         </div>
