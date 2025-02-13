@@ -41,7 +41,7 @@ const DogDetails: React.FC<DogDetailsProps> = ({ dog }) => {
   };
 
   return (
-    <Card>
+    <Card className="animate__animated animate__fadeIn">
       <CardHeader className="flex flex-row gap-8 relative">
         <div
           onClick={() => setOpen(true)}
