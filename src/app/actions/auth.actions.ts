@@ -67,3 +67,9 @@ export async function logoutUser() {
     throw error;
   }
 }
+
+export async function checkLoginStatus(): Promise<boolean> {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("fetch-access-token");
+  return !!accessToken;
+}

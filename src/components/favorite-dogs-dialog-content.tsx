@@ -8,22 +8,18 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  getFavoriteDogIds,
-  removeFavoriteDogId,
-} from "@/lib/local-storage-favorites";
 import { queryFavoriteDogs, queryMatchDog } from "@/lib/queries";
+import { useFavoriteDogsStore } from "@/lib/store";
 import { Dog } from "@/types/dog";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image"; // Import Image for matched dog card
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import DogDetails from "./dog-details";
 
 interface FavoriteDogsDialogContentProps {
   onCloseDialog: () => void;
 }
 
-// Enum to manage display state
 enum DisplayState {
   FAVORITES_LIST,
   MATCH_RESULT,
@@ -32,26 +28,16 @@ enum DisplayState {
 const FavoriteDogsDialogContent: React.FC<FavoriteDogsDialogContentProps> = ({
   onCloseDialog,
 }) => {
-  const favoriteDogIds = getFavoriteDogIds();
+  const favoriteDogIds = useFavoriteDogsStore((state) => state.favoriteDogIds);
+  const hasFavorites = favoriteDogIds.length > 0;
+  const queryClient = useQueryClient();
   const queryKey = queryFavoriteDogs(favoriteDogIds);
-  const { isPending, isError, error, data, refetch } = useQuery(queryKey);
-  const queryClient = useQueryClient(); // Get queryClient
+  const { isPending, isError, error, data } = useQuery(queryKey);
 
   const [displayState, setDisplayState] = useState<DisplayState>(
     DisplayState.FAVORITES_LIST
-  ); // State for display
-  const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
-  const hasFavorites = favoriteDogIds.length > 0;
-
-  const handleFavoriteChangeInDialog = useCallback(
-    (dogId: string, liked: boolean) => {
-      if (!liked) {
-        removeFavoriteDogId(dogId);
-        refetch();
-      }
-    },
-    [refetch]
   );
+  const [matchedDog, setMatchedDog] = useState<Dog | null>(null);
 
   const handleFindMatch = async () => {
     if (!hasFavorites) return;
@@ -82,8 +68,8 @@ const FavoriteDogsDialogContent: React.FC<FavoriteDogsDialogContentProps> = ({
   };
 
   const handleBackToFavorites = () => {
-    setDisplayState(DisplayState.FAVORITES_LIST); // Go back to favorites list
-    setMatchedDog(null); // Clear matched dog data
+    setDisplayState(DisplayState.FAVORITES_LIST);
+    setMatchedDog(null);
   };
 
   if (
@@ -148,11 +134,7 @@ const FavoriteDogsDialogContent: React.FC<FavoriteDogsDialogContentProps> = ({
         <ScrollArea className="h-[400px] w-full">
           <div className="flex flex-col gap-4 p-4">
             {favoriteDogs.map((dog) => (
-              <DogDetails
-                key={dog.id}
-                dog={dog}
-                onFavoriteChange={handleFavoriteChangeInDialog}
-              />
+              <DogDetails key={dog.id} dog={dog} />
             ))}
           </div>
         </ScrollArea>

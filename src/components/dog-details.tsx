@@ -14,51 +14,30 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import {
-  dispatchFavoriteUpdatedEvent,
-  subscribeToFavoriteUpdates,
-} from "@/lib/favorite-event-bus";
-import {
-  addFavoriteDogId,
-  isDogIdFavorite,
-  removeFavoriteDogId,
-} from "@/lib/local-storage-favorites";
+import { useFavoriteDogsStore } from "@/lib/store";
 import { Dog } from "@/types/dog";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import FavoriteHeartIcon from "./favorite-heart-icon";
 
 export interface DogDetailsProps {
   dog: Dog;
-  onFavoriteChange?: (dogId: string, liked: boolean) => void;
 }
 
-const DogDetails: React.FC<DogDetailsProps> = ({ dog, onFavoriteChange }) => {
+const DogDetails: React.FC<DogDetailsProps> = ({ dog }) => {
   const [open, setOpen] = React.useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const isFavoriteDog = useFavoriteDogsStore((state) => state.isFavoriteDog);
+  const addFavoriteDog = useFavoriteDogsStore((state) => state.addFavoriteDog);
+  const removeFavoriteDog = useFavoriteDogsStore(
+    (state) => state.removeFavoriteDog
+  );
 
-  useEffect(() => {
-    setIsFavorite(isDogIdFavorite(dog.id)); // Initial check on mount
-
-    const unsubscribe = subscribeToFavoriteUpdates(() => {
-      // Subscribe to favorite updates
-      setIsFavorite(isDogIdFavorite(dog.id)); // Re-check favorite status when event is dispatched
-    });
-
-    return () => {
-      unsubscribe(); // Unsubscribe on unmount
-    };
-  }, [dog.id]);
-
-  const handleFavoriteChangeInternal = (dogId: string, liked: boolean) => {
-    if (liked) {
-      addFavoriteDogId(dogId);
+  const handleFavoriteClick = () => {
+    if (isFavoriteDog(dog.id)) {
+      removeFavoriteDog(dog.id);
     } else {
-      removeFavoriteDogId(dogId);
+      addFavoriteDog(dog.id);
     }
-    setIsFavorite(liked);
-    dispatchFavoriteUpdatedEvent();
-    onFavoriteChange?.(dogId, liked);
   };
 
   return (
@@ -89,8 +68,8 @@ const DogDetails: React.FC<DogDetailsProps> = ({ dog, onFavoriteChange }) => {
         <div className="absolute top-2 right-2">
           <FavoriteHeartIcon
             dogId={dog.id}
-            initialLiked={isFavorite}
-            onFavoriteChange={handleFavoriteChangeInternal}
+            initialLiked={isFavoriteDog(dog.id)}
+            onFavoriteChange={handleFavoriteClick}
           />
         </div>
       </CardHeader>

@@ -9,27 +9,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { getFavoriteDogIds } from "@/lib/local-storage-favorites";
+import { useFavoriteDogsStore } from "@/lib/store";
 import { Heart } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import FavoriteDogsDialogContent from "./favorite-dogs-dialog-content";
 
 const FavoriteHeaderIcon = () => {
-  const [hasFavorites, setHasFavorites] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-  const updateHasFavorites = useCallback(() => {
-    const favorites = getFavoriteDogIds();
-    setHasFavorites(favorites.length > 0);
-  }, []);
-
-  useEffect(() => {
-    updateHasFavorites();
-    window.addEventListener("storage", updateHasFavorites);
-    return () => {
-      window.removeEventListener("storage", updateHasFavorites);
-    };
-  }, [updateHasFavorites]);
+  const favoriteDogIds = useFavoriteDogsStore((state) => state.favoriteDogIds);
+  const favoriteCount = favoriteDogIds.length;
 
   return (
     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -41,8 +29,8 @@ const FavoriteHeaderIcon = () => {
           aria-label="View favorites"
         >
           <Heart
-            fill={hasFavorites ? "red" : "none"}
-            stroke={hasFavorites ? "red" : "currentColor"}
+            fill={favoriteCount > 0 ? "red" : "none"}
+            stroke={favoriteCount > 0 ? "red" : "currentColor"}
             strokeWidth={1.5}
             className="w-6 h-6"
           />

@@ -35,15 +35,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} container h-screen min-h-[600px] min-w-[325px] mx-auto flex flex-col antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${comicNeue.variable} flex antialiased`}
       >
-        <Providers>
-          <AppNavBar />
+        <div className="container h-screen min-h-[600px] min-w-[325px] mx-auto flex flex-col">
+          <Providers>
+            <AppNavBar />
 
-          {children}
+            {children}
 
-          <Toaster />
-        </Providers>
+            <Toaster />
+          </Providers>
+        </div>
       </body>
     </html>
   );
