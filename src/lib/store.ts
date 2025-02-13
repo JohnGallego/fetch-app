@@ -13,6 +13,7 @@ export const useFavoriteDogsStore = create<FavoriteDogsState>()(
     (set, get) => ({
       favoriteDogIds: [],
       addFavoriteDog: (dogId: string) => {
+        console.log("adding favorite", dogId);
         set((state) => {
           if (state.favoriteDogIds.includes(dogId)) {
             return state;
@@ -22,6 +23,7 @@ export const useFavoriteDogsStore = create<FavoriteDogsState>()(
         });
       },
       removeFavoriteDog: (dogId: string) => {
+        console.log("removing favorite", dogId);
         set((state) => {
           return {
             favoriteDogIds: state.favoriteDogIds.filter((id) => id !== dogId),

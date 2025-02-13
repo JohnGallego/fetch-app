@@ -12,9 +12,10 @@ export function filtersToQueryParams(
 ): URLSearchParams {
   const params = new URLSearchParams();
 
-  if (filters.breeds && filters.breeds.length > 0) {
-    params.set("breeds", filters.breeds.join(","));
-  }
+  const breedsParams = encodeBreedsArrayForAPI(filters.breeds);
+  breedsParams.forEach((value, key) => {
+    params.append(key, value);
+  });
 
   // Age Range - Remove params if they are at their "no restriction" values
   if (filters.ageMin !== 0) {
@@ -65,15 +66,7 @@ export function queryParamsToFilters(params: {
 }): DogSearchParams {
   const filters: DogSearchParams = {};
 
-  if (params.breeds) {
-    if (typeof params.breeds === "string") {
-      filters.breeds = params.breeds.split(",");
-    } else if (Array.isArray(params.breeds)) {
-      filters.breeds = params.breeds.flatMap((breed) =>
-        typeof breed === "string" ? breed.split(",") : []
-      );
-    }
-  }
+  filters.breeds = decodeBreedsArrayFromAPI(params);
 
   // Age Range - Handle missing params as 0 and 13 respectively
   const ageMinParam = params.ageMin;
@@ -115,3 +108,34 @@ export function queryParamsToFilters(params: {
 
   return filters;
 }
+
+export const encodeBreedsArrayForAPI = (
+  breeds: string[] | undefined
+): URLSearchParams => {
+  const params = new URLSearchParams();
+  if (breeds && breeds.length > 0) {
+    breeds.forEach((breed, index) => {
+      params.append(`breeds[${index}]`, breed);
+    });
+  }
+  return params;
+};
+
+export const decodeBreedsArrayFromAPI = (params: {
+  [key: string]: string | string[] | undefined;
+}): string[] => {
+  const breeds: string[] = [];
+  for (const key in params) {
+    if (key.startsWith("breeds[")) {
+      const value = params[key];
+      if (typeof value === "string") {
+        breeds.push(value);
+      } else if (Array.isArray(value)) {
+        breeds.push(
+          ...(value.filter((v) => typeof v === "string") as string[])
+        );
+      }
+    }
+  }
+  return breeds;
+};
